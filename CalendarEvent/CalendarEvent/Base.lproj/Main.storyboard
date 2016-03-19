@@ -37,6 +37,9 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zhf-0L-X0t">
                                 <rect key="frame" x="64" y="238" width="186" height="30"/>
                                 <state key="normal" title="Delete Event from calendar"/>
+                                <connections>
+                                    <action selector="deleteEventFromCalendar:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jFj-mf-Isu"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
