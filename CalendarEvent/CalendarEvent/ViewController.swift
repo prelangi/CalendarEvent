@@ -42,11 +42,41 @@ class ViewController: UIViewController {
             print("Could not save Event")
         }
         
-        let message = (success) ? "Event added successfully to calendar" : "Failed to add event to calendar"
-        let alertView = UIAlertView(title: "", message: message, delegate: nil, cancelButtonTitle: nil, otherButtonTitles: "Dismiss")
-        alertView.show()
+//        var message = (success) ? "Event added successfully to calendar" : "Failed to add event to calendar"
+//        let alertView = UIAlertView(title: "", message: message, delegate: nil, cancelButtonTitle: nil, otherButtonTitles: "Dismiss")
+//        alertView.show()
+
+        addReminder(eventStore)
 
         
+        
+    }
+    
+    func addReminder(eventStore: EKEventStore) {
+        if(EKEventStore.authorizationStatusForEntityType(.Reminder) != EKAuthorizationStatus.Authorized) {
+            
+            eventStore.requestAccessToEntityType(.Reminder, completion: { (granted:Bool, error: NSError?) -> Void in
+                self.createReminder(eventStore, title: "Reminder1")
+            })
+            
+        }
+        else {
+            self.createReminder(eventStore, title: "Reminder for custom event")
+        }
+        
+    }
+    
+    func createReminder(eventStore: EKEventStore, title: String) {
+        let reminder = EKReminder(eventStore: eventStore)
+        reminder.title = title
+        reminder.calendar = eventStore.defaultCalendarForNewReminders()
+        
+        do {
+            try eventStore.saveReminder(reminder, commit: true)
+        }
+        catch {
+            print("Could not add reminder")
+        }
     }
     
     func deleteEvent(eventStore: EKEventStore, eventId: String) {
